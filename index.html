@@ -175,49 +175,7 @@
   .btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--line);}
   .btn-ghost:hover{background:var(--parchment);}
 
-  /* add-item form */
-  #add-form-wrap{
-    display:none;
-    background:var(--white);
-    border:1px solid var(--line);
-    border-radius:var(--radius-card);
-    padding:24px;
-    margin:20px 0 8px;
-  }
-  #add-form-wrap.open{display:block;}
-  #add-form-wrap h3{font-size:18px;margin-bottom:14px;}
-  .field{margin-bottom:14px;}
-  .field label{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:5px;}
-  .field input[type=text],
-  .field input[type=number],
-  .field textarea{
-    width:100%;
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:10px 12px;
-    font-size:15px;
-    font-family:inherit;
-    background:var(--cream);
-    color:var(--ink);
-  }
-  .field textarea{resize:vertical;min-height:70px;}
-  .field input[type=file]{font-size:13px;}
-  .form-row{display:flex;gap:14px;flex-wrap:wrap;}
-  .form-row .field{flex:1;min-width:160px;}
   .form-actions{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;}
-  .form-error{color:var(--rust-deep);font-size:13px;margin:-6px 0 12px;display:none;}
-  .form-note{font-size:12.5px;color:var(--ink-soft);margin-top:10px;line-height:1.5;}
-  .storage-warning{
-    display:none;
-    background:var(--parchment);
-    border:1px solid var(--gold);
-    color:var(--gold-deep);
-    border-radius:10px;
-    padding:12px 16px;
-    font-size:13.5px;
-    line-height:1.5;
-    margin:16px 0 0;
-  }
 
   /* lot grid */
   .lot-grid{
@@ -270,18 +228,6 @@
   .lot-title{font-size:17px;margin-bottom:6px;}
   .lot-desc{font-size:14px;color:var(--ink-soft);margin-bottom:12px;}
   .lot-bid{font-size:13px;font-weight:700;color:var(--gold-deep);}
-  .lot-remove{
-    position:absolute;top:10px;right:10px;
-    background:rgba(255,253,248,.9);
-    border:1px solid var(--line);
-    border-radius:6px;
-    width:26px;height:26px;
-    font-size:13px;
-    cursor:pointer;
-    color:var(--ink-soft);
-    line-height:1;
-  }
-  .lot-remove:hover{color:var(--rust-deep);border-color:var(--rust);}
 
   .empty-state{
     text-align:center;
@@ -394,7 +340,6 @@
 <nav class="tabs" role="tablist" aria-label="Page sections">
   <button role="tab" id="tab-home" aria-controls="panel-home" aria-selected="true" class="active" onclick="showPanel('home')">Home</button>
   <button role="tab" id="tab-auction" aria-controls="panel-auction" aria-selected="false" onclick="showPanel('auction')">Auction items</button>
-  <button role="tab" id="tab-food" aria-controls="panel-food" aria-selected="false" onclick="showPanel('food')">Food & activities</button>
 </nav>
 
 <main>
@@ -419,85 +364,8 @@
       <span class="tag">Supports our operating budget</span>
       <span class="tag">Supports our land campaign</span>
     </div>
-  </section>
 
-  <section id="panel-auction" class="panel" role="tabpanel" aria-labelledby="tab-auction">
-    <div class="auction-intro">
-      <div>
-        <h2>Auction items</h2>
-        <p>Browse the lots below. Committee members can add an item with a photo or a written description.</p>
-      </div>
-      <button class="btn btn-primary" id="toggle-form-btn" onclick="toggleForm()">Add an item</button>
-    </div>
-
-    <div id="storage-warning" class="storage-warning">
-      This browser won't save items between visits when the page is opened as a local file. Items you add will still show up below &mdash; just click <strong>Copy item list</strong> and send it over before you close this tab, so nothing gets lost.
-    </div>
-
-    <div id="add-form-wrap">
-      <h3>Add an auction item</h3>
-      <form id="add-form" novalidate>
-        <div class="field">
-          <label for="item-name">Item name</label>
-          <input type="text" id="item-name" placeholder="Handmade quilt">
-        </div>
-        <div class="field">
-          <label for="item-desc">Description</label>
-          <textarea id="item-desc" placeholder="Describe the item, service, or experience being donated"></textarea>
-        </div>
-        <div class="form-row">
-          <div class="field">
-            <label for="item-bid">Starting bid (optional)</label>
-            <input type="text" id="item-bid" placeholder="$25">
-          </div>
-          <div class="field">
-            <label for="item-photo">Photo (optional)</label>
-            <input type="file" id="item-photo" accept="image/*">
-          </div>
-        </div>
-        <p class="form-error" id="form-error">Enter an item name and description first.</p>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Save item</button>
-          <button type="button" class="btn btn-ghost" onclick="toggleForm()">Cancel</button>
-        </div>
-        <p class="form-note">Items you save here are stored on this device only, so they won't yet appear for other visitors. Use "Copy item list" below and send it to your webmaster to publish new items for everyone.</p>
-      </form>
-    </div>
-
-    <div id="lot-grid" class="lot-grid"></div>
-    <div id="empty-state" class="empty-state">
-      <h3>No lots posted yet</h3>
-      <p>Add the first item above to get the auction list started.</p>
-    </div>
-
-    <div class="form-actions" style="margin-bottom:50px;">
-      <button class="btn btn-ghost" onclick="copyItems()">Copy item list</button>
-    </div>
-  </section>
-
-  <section id="panel-food" class="panel" role="tabpanel" aria-labelledby="tab-food">
-    <div class="auction-intro">
-      <div>
-        <h2>Food & activities</h2>
-        <p>What to expect on the day &mdash; food, games, and things to do while you bid.</p>
-      </div>
-    </div>
-
-    <h3 class="section-heading">Food</h3>
-    <ul class="menu-list">
-      <li>Breakfast sandwiches</li>
-      <li>Pulled pork</li>
-      <li>BBQ chicken</li>
-      <li>Burgers and hot dogs</li>
-      <li>Acai bowls</li>
-      <li>French fries</li>
-      <li>Coffee</li>
-      <li>Ice cream</li>
-      <li>Baked goods</li>
-    </ul>
-    <p class="menu-disclaimer">Menu subject to change.</p>
-
-    <h3 class="section-heading" style="margin-top:38px;">Activities</h3>
+    <h3 class="section-heading" style="margin-top:44px;">Activities</h3>
     <div class="activity-grid">
       <div class="activity-card">
         <h4>Volleyball tournament</h4>
@@ -515,6 +383,35 @@
         <h4>Bounce house</h4>
         <p>Open for kids throughout the day.</p>
       </div>
+    </div>
+
+    <h3 class="section-heading" style="margin-top:38px;">Food</h3>
+    <ul class="menu-list">
+      <li>Breakfast sandwiches</li>
+      <li>Pulled pork</li>
+      <li>BBQ chicken</li>
+      <li>Burgers and hot dogs</li>
+      <li>Acai bowls</li>
+      <li>French fries</li>
+      <li>Coffee</li>
+      <li>Ice cream</li>
+      <li>Baked goods</li>
+    </ul>
+    <p class="menu-disclaimer">Menu subject to change.</p>
+  </section>
+
+  <section id="panel-auction" class="panel" role="tabpanel" aria-labelledby="tab-auction">
+    <div class="auction-intro">
+      <div>
+        <h2>Auction items</h2>
+        <p>Browse the lots up for bid below.</p>
+      </div>
+    </div>
+
+    <div id="lot-grid" class="lot-grid"></div>
+    <div id="empty-state" class="empty-state">
+      <h3>Items coming soon</h3>
+      <p>Lots will be posted here as they're added.</p>
     </div>
   </section>
 </main>
@@ -546,71 +443,21 @@ function showPanel(name){
   tab.setAttribute('aria-selected','true');
 }
 
-var STORAGE_KEY = 'ucaAuctionItems';
-var storageAvailable = true;
-var memoryItems = [];
-
-function testStorage(){
-  try{
-    var t = '__uca_test__';
-    localStorage.setItem(t, '1');
-    localStorage.removeItem(t);
-    return true;
-  }catch(e){
-    return false;
-  }
-}
-storageAvailable = testStorage();
-
-function loadItems(){
-  if(!storageAvailable) return memoryItems;
-  try{
-    var raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  }catch(e){
-    return memoryItems;
-  }
-}
-function saveItems(items){
-  if(!storageAvailable){
-    memoryItems = items;
-    showStorageWarning();
-    return;
-  }
-  try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }catch(e){
-    storageAvailable = false;
-    memoryItems = items;
-    showStorageWarning();
-  }
-}
-
-function showStorageWarning(){
-  var el = document.getElementById('storage-warning');
-  if(el) el.style.display = 'block';
-}
+var ITEMS = [
+];
 
 function renderItems(){
-  var items = loadItems();
   var grid = document.getElementById('lot-grid');
   var empty = document.getElementById('empty-state');
   grid.innerHTML = '';
-  if(items.length === 0){
+  if(ITEMS.length === 0){
     empty.style.display = 'block';
     return;
   }
   empty.style.display = 'none';
-  items.forEach(function(item, idx){
+  ITEMS.forEach(function(item, idx){
     var card = document.createElement('div');
     card.className = 'lot-card';
-
-    var remove = document.createElement('button');
-    remove.className = 'lot-remove';
-    remove.setAttribute('aria-label','Remove this item');
-    remove.innerHTML = '&times;';
-    remove.onclick = function(){ removeItem(idx); };
-    card.appendChild(remove);
 
     var photoWrap = document.createElement('div');
     photoWrap.className = 'lot-photo';
@@ -649,82 +496,6 @@ function renderItems(){
     }
     card.appendChild(body);
     grid.appendChild(card);
-  });
-}
-
-function removeItem(idx){
-  var items = loadItems();
-  items.splice(idx,1);
-  saveItems(items);
-  renderItems();
-}
-
-function toggleForm(){
-  document.getElementById('add-form-wrap').classList.toggle('open');
-}
-
-function resizeImage(file, callback){
-  var reader = new FileReader();
-  reader.onload = function(e){
-    var img = new Image();
-    img.onload = function(){
-      var maxW = 700;
-      var scale = Math.min(1, maxW / img.width);
-      var canvas = document.createElement('canvas');
-      canvas.width = img.width * scale;
-      canvas.height = img.height * scale;
-      var ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      callback(canvas.toDataURL('image/jpeg', 0.75));
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-document.getElementById('add-form').addEventListener('submit', function(e){
-  e.preventDefault();
-  var name = document.getElementById('item-name').value.trim();
-  var desc = document.getElementById('item-desc').value.trim();
-  var bid = document.getElementById('item-bid').value.trim();
-  var fileInput = document.getElementById('item-photo');
-  var errorEl = document.getElementById('form-error');
-
-  if(!name || !desc){
-    errorEl.style.display = 'block';
-    return;
-  }
-  errorEl.style.display = 'none';
-
-  function finishSave(photoData){
-    var items = loadItems();
-    items.push({name:name, desc:desc, bid:bid, photo:photoData || null});
-    saveItems(items);
-    renderItems();
-    document.getElementById('add-form').reset();
-    document.getElementById('add-form-wrap').classList.remove('open');
-  }
-
-  if(fileInput.files && fileInput.files[0]){
-    resizeImage(fileInput.files[0], finishSave);
-  } else {
-    finishSave(null);
-  }
-});
-
-['item-name','item-desc'].forEach(function(id){
-  document.getElementById(id).addEventListener('input', function(){
-    document.getElementById('form-error').style.display = 'none';
-  });
-});
-
-function copyItems(){
-  var items = loadItems();
-  var text = JSON.stringify(items, null, 2);
-  navigator.clipboard.writeText(text).then(function(){
-    alert('Item list copied. Paste it into a message to your webmaster to publish it for everyone.');
-  }, function(){
-    prompt('Copy this text:', text);
   });
 }
 
