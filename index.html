@@ -1,1 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fall Fundraising Auction · Upward Christian Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1c2142;
+    --navy-deep:#12152c;
+    --cream:#f7f2e6;
+    --parchment:#efe4cd;
+    --gold:#c2953f;
+    --gold-deep:#96702a;
+    --rust:#8a3524;
+    --rust-deep:#6c281b;
+    --ink:#29241d;
+    --ink-soft:#635a49;
+    --line:#ddceac;
+    --white:#fffdf8;
+    --radius-card:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Source Sans 3', system-ui, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:600;
+    margin:0;
+    color:var(--navy);
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;}
 
+  /* ---------- header ---------- */
+  header.site-top{
+    background:var(--navy);
+    padding:18px clamp(20px,5vw,56px);
+    display:flex;
+    align-items:center;
+  }
+  header.site-top img{height:38px;width:auto;}
+
+  /* ---------- tab nav ---------- */
+  nav.tabs{
+    background:var(--navy-deep);
+    display:flex;
+    gap:0;
+    padding:0 clamp(20px,5vw,56px);
+    position:sticky;
+    top:0;
+    z-index:20;
+  }
+  nav.tabs button{
+    background:transparent;
+    border:none;
+    color:#cfc9b8;
+    padding:16px 22px;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.02em;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav.tabs button:hover{color:var(--white);}
+  nav.tabs button.active{
+    color:var(--white);
+    border-bottom-color:var(--gold);
+  }
+  nav.tabs button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;}
+
+  main{max-width:900px;margin:0 auto;padding:0 clamp(20px,5vw,56px);}
+
+  .panel{display:none;animation:rise .35s ease both;}
+  .panel.active{display:block;}
+  @keyframes rise{
+    from{opacity:0;transform:translateY(8px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .panel{animation:none;}
+  }
+
+  /* ---------- home panel ---------- */
+  .hero{margin-top:44px;}
+  .hero h1{
+    font-size:clamp(34px,5vw,52px);
+    line-height:1.05;
+    margin:0;
+  }
+  .event-date{
+    display:block;
+    font-family:'Fraunces', Georgia, serif;
+    font-size:clamp(20px,2.6vw,28px);
+    font-weight:700;
+    letter-spacing:.02em;
+    color:var(--rust-deep);
+    margin:10px 0 24px;
+  }
+  .hero p.lede{
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:640px;
+    margin:0 0 28px;
+  }
+
+  .info-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:22px 26px;
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    margin-bottom:20px;
+  }
+  .info-card .pin{
+    flex:none;
+    width:34px;height:34px;
+    border-radius:50%;
+    background:var(--rust);
+    color:var(--white);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .info-card address{font-style:normal;color:var(--ink-soft);font-size:15px;}
+  .info-card address strong{color:var(--ink);display:block;font-size:16px;margin-bottom:2px;}
+
+  .tags{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 56px;}
+  .tag{
+    background:var(--parchment);
+    color:var(--gold-deep);
+    border:1px solid var(--line);
+    padding:7px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+  }
+
+  /* ---------- auction panel ---------- */
+  .auction-intro{
+    margin-top:40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .auction-intro h2{font-size:28px;}
+  .auction-intro p{color:var(--ink-soft);margin:6px 0 0;max-width:460px;font-size:15px;}
+
+  .btn{
+    border:none;
+    border-radius:8px;
+    padding:11px 20px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform .12s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--rust);color:var(--white);}
+  .btn-primary:hover{background:var(--rust-deep);}
+  .btn-ghost{background:transparent;color:var(--navy);border:1px solid var(--line);}
+  .btn-ghost:hover{background:var(--parchment);}
+
+  /* add-item form */
+  #add-form-wrap{
+    display:none;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:24px;
+    margin:20px 0 8px;
+  }
+  #add-form-wrap.open{display:block;}
+  #add-form-wrap h3{font-size:18px;margin-bottom:14px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:5px;}
+  .field input[type=text],
+  .field input[type=number],
+  .field textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:15px;
+    font-family:inherit;
+    background:var(--cream);
+    color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:70px;}
+  .field input[type=file]{font-size:13px;}
+  .form-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .form-row .field{flex:1;min-width:160px;}
+  .form-actions{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;}
+  .form-error{color:var(--rust-deep);font-size:13px;margin:-6px 0 12px;display:none;}
+  .form-note{font-size:12.5px;color:var(--ink-soft);margin-top:10px;line-height:1.5;}
+  .storage-warning{
+    display:none;
+    background:var(--parchment);
+    border:1px solid var(--gold);
+    color:var(--gold-deep);
+    border-radius:10px;
+    padding:12px 16px;
+    font-size:13.5px;
+    line-height:1.5;
+    margin:16px 0 0;
+  }
+
+  /* lot grid */
+  .lot-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:22px;
+    margin:28px 0 60px;
+  }
+  .lot-card{
+    position:relative;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .lot-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(28,33,66,.12);}
+  .lot-card::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:10px;
+    background-image:radial-gradient(circle,var(--cream) 3px,transparent 3.5px);
+    background-size:10px 14px;
+    background-position:0 4px;
+  }
+  .lot-photo{
+    height:150px;
+    background:var(--parchment);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    margin-left:10px;
+  }
+  .lot-photo img{width:100%;height:100%;object-fit:cover;}
+  .lot-photo .placeholder{color:var(--gold-deep);opacity:.55;}
+  .lot-body{padding:16px 18px 18px 24px;}
+  .lot-num{
+    display:inline-flex;
+    align-items:center;justify-content:center;
+    min-width:30px;height:30px;
+    padding:0 8px;
+    border-radius:50%;
+    background:var(--rust);
+    color:var(--white);
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:13px;
+    margin-bottom:10px;
+  }
+  .lot-title{font-size:17px;margin-bottom:6px;}
+  .lot-desc{font-size:14px;color:var(--ink-soft);margin-bottom:12px;}
+  .lot-bid{font-size:13px;font-weight:700;color:var(--gold-deep);}
+  .lot-remove{
+    position:absolute;top:10px;right:10px;
+    background:rgba(255,253,248,.9);
+    border:1px solid var(--line);
+    border-radius:6px;
+    width:26px;height:26px;
+    font-size:13px;
+    cursor:pointer;
+    color:var(--ink-soft);
+    line-height:1;
+  }
+  .lot-remove:hover{color:var(--rust-deep);border-color:var(--rust);}
+
+  .empty-state{
+    text-align:center;
+    padding:50px 20px;
+    color:var(--ink-soft);
+    border:1px dashed var(--line);
+    border-radius:var(--radius-card);
+    margin:24px 0 60px;
+  }
+  .empty-state h3{color:var(--navy);margin-bottom:8px;font-size:19px;}
+
+  .section-heading{
+    font-size:20px;
+    margin:28px 0 16px;
+  }
+  .menu-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:10px 24px;
+  }
+  .menu-list li{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:13px 18px;
+    font-size:15px;
+    font-weight:600;
+    color:var(--ink);
+    position:relative;
+    padding-left:34px;
+  }
+  .menu-list li::before{
+    content:"";
+    position:absolute;
+    left:16px;top:50%;
+    transform:translateY(-50%);
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--gold);
+  }
+  .menu-disclaimer{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:16px;
+  }
+
+  .activity-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:16px;
+    margin-bottom:60px;
+  }
+  .activity-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+  }
+  .activity-card h4{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    color:var(--navy);
+    font-size:16px;
+    margin:0 0 6px;
+  }
+  .activity-card p{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--navy);
+    color:#e7e3d4;
+    margin-top:20px;
+    padding:44px clamp(20px,5vw,56px) 40px;
+  }
+  .footer-grid{
+    max-width:900px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+  }
+  @media (max-width:520px){.footer-grid{grid-template-columns:1fr;}}
+  footer h4{
+    font-family:'Fraunces',serif;
+    font-size:14px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 14px;
+    font-weight:600;
+  }
+  footer p{margin:0 0 6px;font-size:15px;}
+  footer a{text-decoration:none;color:#e7e3d4;}
+  footer a:hover{color:var(--gold);text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<header class="site-top">
+  <img src="data:image/png;base64,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" alt="Upward Christian Academy">
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Page sections">
+  <button role="tab" id="tab-home" aria-controls="panel-home" aria-selected="true" class="active" onclick="showPanel('home')">Home</button>
+  <button role="tab" id="tab-auction" aria-controls="panel-auction" aria-selected="false" onclick="showPanel('auction')">Auction items</button>
+  <button role="tab" id="tab-food" aria-controls="panel-food" aria-selected="false" onclick="showPanel('food')">Food & activities</button>
+</nav>
+
+<main>
+  <section id="panel-home" class="panel active" role="tabpanel" aria-labelledby="tab-home">
+    <div class="hero">
+      <h1>Fall Fundraising Auction</h1>
+      <span class="event-date">Sep 12, 2026</span>
+      <p class="lede">Bid on donated goods and services with proceeds supporting our operating budget and our capital campaign for our future campus.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="pin" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      </div>
+      <address>
+        <strong>Antrim Brethren in Christ Church</strong>
+        24 Kauffman Rd E, Chambersburg, PA 17202
+      </address>
+    </div>
+
+    <div class="tags">
+      <span class="tag">Supports our operating budget</span>
+      <span class="tag">Supports our land campaign</span>
+    </div>
+  </section>
+
+  <section id="panel-auction" class="panel" role="tabpanel" aria-labelledby="tab-auction">
+    <div class="auction-intro">
+      <div>
+        <h2>Auction items</h2>
+        <p>Browse the lots below. Committee members can add an item with a photo or a written description.</p>
+      </div>
+      <button class="btn btn-primary" id="toggle-form-btn" onclick="toggleForm()">Add an item</button>
+    </div>
+
+    <div id="storage-warning" class="storage-warning">
+      This browser won't save items between visits when the page is opened as a local file. Items you add will still show up below &mdash; just click <strong>Copy item list</strong> and send it over before you close this tab, so nothing gets lost.
+    </div>
+
+    <div id="add-form-wrap">
+      <h3>Add an auction item</h3>
+      <form id="add-form" novalidate>
+        <div class="field">
+          <label for="item-name">Item name</label>
+          <input type="text" id="item-name" placeholder="Handmade quilt">
+        </div>
+        <div class="field">
+          <label for="item-desc">Description</label>
+          <textarea id="item-desc" placeholder="Describe the item, service, or experience being donated"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="item-bid">Starting bid (optional)</label>
+            <input type="text" id="item-bid" placeholder="$25">
+          </div>
+          <div class="field">
+            <label for="item-photo">Photo (optional)</label>
+            <input type="file" id="item-photo" accept="image/*">
+          </div>
+        </div>
+        <p class="form-error" id="form-error">Enter an item name and description first.</p>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save item</button>
+          <button type="button" class="btn btn-ghost" onclick="toggleForm()">Cancel</button>
+        </div>
+        <p class="form-note">Items you save here are stored on this device only, so they won't yet appear for other visitors. Use "Copy item list" below and send it to your webmaster to publish new items for everyone.</p>
+      </form>
+    </div>
+
+    <div id="lot-grid" class="lot-grid"></div>
+    <div id="empty-state" class="empty-state">
+      <h3>No lots posted yet</h3>
+      <p>Add the first item above to get the auction list started.</p>
+    </div>
+
+    <div class="form-actions" style="margin-bottom:50px;">
+      <button class="btn btn-ghost" onclick="copyItems()">Copy item list</button>
+    </div>
+  </section>
+
+  <section id="panel-food" class="panel" role="tabpanel" aria-labelledby="tab-food">
+    <div class="auction-intro">
+      <div>
+        <h2>Food & activities</h2>
+        <p>What to expect on the day &mdash; food, games, and things to do while you bid.</p>
+      </div>
+    </div>
+
+    <h3 class="section-heading">Food</h3>
+    <ul class="menu-list">
+      <li>Breakfast sandwiches</li>
+      <li>Pulled pork</li>
+      <li>BBQ chicken</li>
+      <li>Burgers and hot dogs</li>
+      <li>Acai bowls</li>
+      <li>French fries</li>
+      <li>Coffee</li>
+      <li>Ice cream</li>
+      <li>Baked goods</li>
+    </ul>
+    <p class="menu-disclaimer">Menu subject to change.</p>
+
+    <h3 class="section-heading" style="margin-top:38px;">Activities</h3>
+    <div class="activity-grid">
+      <div class="activity-card">
+        <h4>Volleyball tournament</h4>
+        <p>Indoor, coed teams of six. Competitive and recreational divisions.</p>
+      </div>
+      <div class="activity-card">
+        <h4>Ultimate frisbee</h4>
+        <p>No registration needed. Arrive at 9:00 AM &mdash; game runs until 12:00 PM.</p>
+      </div>
+      <div class="activity-card">
+        <h4>Kids' barrel train</h4>
+        <p>A ride around the grounds for little ones.</p>
+      </div>
+      <div class="activity-card">
+        <h4>Bounce house</h4>
+        <p>Open for kids throughout the day.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h4>Committee</h4>
+      <p><a href="tel:7174466339">Lynwood Petre (Chair) · 717-446-6339</a></p>
+      <p><a href="tel:7173854249">Gene Martin (Sec) · 717-385-4249</a></p>
+    </div>
+    <div>
+      <h4>The school</h4>
+      <p><a href="https://www.upwardchristian.org/" target="_blank" rel="noopener">upwardchristian.org ↗</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('nav.tabs button').forEach(b=>{
+    b.classList.remove('active');
+    b.setAttribute('aria-selected','false');
+  });
+  document.getElementById('panel-'+name).classList.add('active');
+  var tab = document.getElementById('tab-'+name);
+  tab.classList.add('active');
+  tab.setAttribute('aria-selected','true');
+}
+
+var STORAGE_KEY = 'ucaAuctionItems';
+var storageAvailable = true;
+var memoryItems = [];
+
+function testStorage(){
+  try{
+    var t = '__uca_test__';
+    localStorage.setItem(t, '1');
+    localStorage.removeItem(t);
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+storageAvailable = testStorage();
+
+function loadItems(){
+  if(!storageAvailable) return memoryItems;
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){
+    return memoryItems;
+  }
+}
+function saveItems(items){
+  if(!storageAvailable){
+    memoryItems = items;
+    showStorageWarning();
+    return;
+  }
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }catch(e){
+    storageAvailable = false;
+    memoryItems = items;
+    showStorageWarning();
+  }
+}
+
+function showStorageWarning(){
+  var el = document.getElementById('storage-warning');
+  if(el) el.style.display = 'block';
+}
+
+function renderItems(){
+  var items = loadItems();
+  var grid = document.getElementById('lot-grid');
+  var empty = document.getElementById('empty-state');
+  grid.innerHTML = '';
+  if(items.length === 0){
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  items.forEach(function(item, idx){
+    var card = document.createElement('div');
+    card.className = 'lot-card';
+
+    var remove = document.createElement('button');
+    remove.className = 'lot-remove';
+    remove.setAttribute('aria-label','Remove this item');
+    remove.innerHTML = '&times;';
+    remove.onclick = function(){ removeItem(idx); };
+    card.appendChild(remove);
+
+    var photoWrap = document.createElement('div');
+    photoWrap.className = 'lot-photo';
+    if(item.photo){
+      var img = document.createElement('img');
+      img.src = item.photo;
+      img.alt = item.name;
+      photoWrap.appendChild(img);
+    } else {
+      photoWrap.innerHTML = '<svg class="placeholder" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-4-4 3-2-2-5 5"/></svg>';
+    }
+    card.appendChild(photoWrap);
+
+    var body = document.createElement('div');
+    body.className = 'lot-body';
+    var num = document.createElement('span');
+    num.className = 'lot-num';
+    num.textContent = String(idx+1).padStart(3,'0');
+    body.appendChild(num);
+
+    var title = document.createElement('h3');
+    title.className = 'lot-title';
+    title.textContent = item.name;
+    body.appendChild(title);
+
+    var desc = document.createElement('p');
+    desc.className = 'lot-desc';
+    desc.textContent = item.desc;
+    body.appendChild(desc);
+
+    if(item.bid){
+      var bid = document.createElement('p');
+      bid.className = 'lot-bid';
+      bid.textContent = 'Starting bid: ' + item.bid;
+      body.appendChild(bid);
+    }
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+}
+
+function removeItem(idx){
+  var items = loadItems();
+  items.splice(idx,1);
+  saveItems(items);
+  renderItems();
+}
+
+function toggleForm(){
+  document.getElementById('add-form-wrap').classList.toggle('open');
+}
+
+function resizeImage(file, callback){
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var img = new Image();
+    img.onload = function(){
+      var maxW = 700;
+      var scale = Math.min(1, maxW / img.width);
+      var canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      callback(canvas.toDataURL('image/jpeg', 0.75));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+document.getElementById('add-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = document.getElementById('item-name').value.trim();
+  var desc = document.getElementById('item-desc').value.trim();
+  var bid = document.getElementById('item-bid').value.trim();
+  var fileInput = document.getElementById('item-photo');
+  var errorEl = document.getElementById('form-error');
+
+  if(!name || !desc){
+    errorEl.style.display = 'block';
+    return;
+  }
+  errorEl.style.display = 'none';
+
+  function finishSave(photoData){
+    var items = loadItems();
+    items.push({name:name, desc:desc, bid:bid, photo:photoData || null});
+    saveItems(items);
+    renderItems();
+    document.getElementById('add-form').reset();
+    document.getElementById('add-form-wrap').classList.remove('open');
+  }
+
+  if(fileInput.files && fileInput.files[0]){
+    resizeImage(fileInput.files[0], finishSave);
+  } else {
+    finishSave(null);
+  }
+});
+
+['item-name','item-desc'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', function(){
+    document.getElementById('form-error').style.display = 'none';
+  });
+});
+
+function copyItems(){
+  var items = loadItems();
+  var text = JSON.stringify(items, null, 2);
+  navigator.clipboard.writeText(text).then(function(){
+    alert('Item list copied. Paste it into a message to your webmaster to publish it for everyone.');
+  }, function(){
+    prompt('Copy this text:', text);
+  });
+}
+
+renderItems();
+</script>
+
+</body>
+</html>
