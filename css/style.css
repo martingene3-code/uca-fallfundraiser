@@ -93,9 +93,13 @@ p.lede { font-size: 1.15rem; color: var(--ink-soft); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 32px;
+  padding: 14px 32px;
   max-width: var(--max-width);
   margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+  .nav-row { padding: 12px 20px; }
 }
 
 .brand {
@@ -210,11 +214,11 @@ p.lede { font-size: 1.15rem; color: var(--ink-soft); }
   grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   align-items: center;
-  padding-top: 84px;
+  padding-top: 56px;
   padding-bottom: 0;
 }
 @media (max-width: 860px) {
-  .hero .wrap { grid-template-columns: 1fr; padding-top: 56px; }
+  .hero .wrap { grid-template-columns: 1fr; padding-top: 28px; }
 }
 
 .hero-copy h1 { color: #FAF9F6; }
